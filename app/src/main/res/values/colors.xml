@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#393e41</color>
+	<color name="colorPrimaryDark">#30292f</color>
+	<color name="colorAccent">#e87511</color>
+	<color name="colorSecondary">#ede7d9</color>
+	<color name="colorSecondaryDark">#d3d0cb</color>
+
+	<color name="teamRed">#FFABAB</color>
+	<color name="teamRedActive">#FF5252</color>
+	<color name="teamBlue">#9BC3FF</color>
+	<color name="teamBlueActive">#3682FF</color>
+</resources>

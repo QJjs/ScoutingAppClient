@@ -1,0 +1,28 @@
+<resources>
+	<!-- … -->
+	<string name="app_name">BBQ Scouting App</string>
+	<string name="activity_forms">Form Browser</string>
+	<string name="action_new">New Form</string>
+	<string name="action_saved">Saved Forms</string>
+	<string name="action_sync">Sync Data</string>
+	<string name="action_settings">Settings</string>
+	<string name="action_server_url">Change Server URL</string>
+	<string name="action_template">Change Active Template</string>
+	<string name="dialog_new">Delete current form?</string>
+	<string name="dialog_delete">Delete this file?</string>
+	<string name="dialog_delete_content">Peder will be very mad…</string>
+	<string name="dialog_url">http://example.com</string>
+
+	<string name="tab_finished_forms">Finished</string>
+	<string name="tab_synced_forms">Synced</string>
+	<string name="tab_template_forms">Templates</string>
+
+	<string name="uncertain">\?</string>
+	<string name="no_files">No files found</string>
+	<string name="minus">–</string>
+	<string name="plus">+</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
+</resources>
