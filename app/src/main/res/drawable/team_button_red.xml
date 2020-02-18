@@ -5,7 +5,7 @@
 		<item>
 			<shape android:shape="rectangle">
 				<corners android:radius="2dp" />
-				<solid android:color="@drawable/team_button_red_material" />
+				<solid android:color="@color/team_button_red_material" />
 				<padding android:left="8dp"
 						android:top="4dp"
 						android:right="8dp"

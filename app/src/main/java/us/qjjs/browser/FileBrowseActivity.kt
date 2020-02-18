@@ -17,7 +17,6 @@ class FileBrowseActivity : AppCompatActivity() {
 
 		val pager: ViewPager = findViewById(R.id.pager)
 		pager.adapter = pageCollection
-		pager.offscreenPageLimit = pageCollection.count - 1
 		val tabs: TabLayout = findViewById(R.id.tabs)
 		tabs.setupWithViewPager(pager)
 	}

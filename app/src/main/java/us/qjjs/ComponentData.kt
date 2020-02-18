@@ -16,9 +16,9 @@ class ComponentData {
 		return if (i > data.size) null else data[i]
 	}
 
-	operator fun get(s: String): JSONProperty? {
+	operator fun get(s: String): Any? {
 		val candidates = data.filter { it.name == s }
-		return if (candidates.isNotEmpty()) candidates[0] else null
+		return if (candidates.isNotEmpty()) candidates[0].value else null
 	}
 
 	operator fun set(i: Int, value: JSONProperty) {

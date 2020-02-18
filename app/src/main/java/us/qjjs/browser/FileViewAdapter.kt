@@ -83,7 +83,15 @@ class FileViewAdapter(private val context: Context, private val files: ArrayList
 						close()
 					}
 					connection.connect()
-					Log.i("app", String(connection.errorStream.readBytes()))
+
+					if (String(connection.errorStream.readBytes()) == "received") {
+						if (files[position].renameTo(File(context.filesDir, "synced"))) {
+							files[position].delete()
+						}
+						files.removeAt(position)
+						this@FileViewAdapter.notifyItemRemoved(position)
+						this@FileViewAdapter.notifyItemRangeChanged(position, files.size)
+					}
 				} catch (e: Exception) {
 					Log.e("app", e.toString())
 				} finally {
@@ -92,6 +100,10 @@ class FileViewAdapter(private val context: Context, private val files: ArrayList
 			}
 		}
 		Log.i("app", files[position].parentFile?.name ?: "no parent!!")
+		if (files[position].parentFile?.name == "templates" || files[position].parentFile?.name == "synced") {
+			holder.upload.isEnabled = false
+		}
+
 	}
 
 	override fun getItemCount(): Int {

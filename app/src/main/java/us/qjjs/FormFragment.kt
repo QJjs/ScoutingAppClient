@@ -31,16 +31,16 @@ class FormFragment(val elementData: Array<ComponentData>) : Fragment() {
 	}
 
 	fun createElement(properties: ComponentData, view: View? = this.view) {
-		val componentType = properties["type"]?.value ?: "unknown"
+		val componentType = properties["type"]?.toString() ?: "unknown"
 
 		var newView: View? = null
 		var lp: LinearLayout.LayoutParams? = null
 		when (componentType) {
 			"plain_text" -> {
 				newView = TextView(context)
-				newView.text = properties["message"]?.value as String
-				if (properties["format"]?.value is String) {
-					val format = properties["format"]?.value as String
+				newView.text = properties["message"] as String
+				if (properties["format"] is String) {
+					val format = properties["format"] as String
 					if (format.isNotEmpty()) {
 						newView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
 							when (format) {
@@ -54,39 +54,39 @@ class FormFragment(val elementData: Array<ComponentData>) : Fragment() {
 			}
 			"check" -> {
 				newView = CheckBox(context)
-				newView.text = properties["label"]?.value as String
+				newView.text = properties["label"] as String
 				lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 				lp.gravity = Gravity.CENTER_HORIZONTAL
 			}
 			"edit_text" -> {
 				newView = EditText(context)
-				if (properties["hint"]?.value is String) {
-					newView.hint = properties["hint"]?.value as String
+				if (properties["hint"] is String) {
+					newView.hint = properties["hint"] as String
 				}
-				if (properties["multiline"]?.value is Boolean) {
-					newView.isSingleLine = !(properties["multiline"]?.value as Boolean)
+				if (properties["multiline"] is Boolean) {
+					newView.isSingleLine = !(properties["multiline"] as Boolean)
 				}
 			}
 			"number" -> {
 				newView = NumberInput(context)
-				if (properties["min"]?.value is Int) {
-					newView.minimum = properties["min"]?.value as Int
+				if (properties["min"] is Int) {
+					newView.minimum = properties["min"] as Int
 				}
 
-				if (properties["max"]?.value is Int) {
-					newView.maximum = properties["max"]?.value as Int
+				if (properties["max"] is Int) {
+					newView.maximum = properties["max"] as Int
 				}
 
-				if (properties["label"]?.value is String) {
-					newView.label = properties["label"]?.value as String
+				if (properties["label"] is String) {
+					newView.label = properties["label"] as String
 				}
 			}
 			"list" -> {
 				newView = Spinner(context)
-				val entries = properties["entries"]?.value as JSONArray
+				val entries = properties["entries"] as JSONArray
 				val items = Array(entries.length() + 1) {
 					if (it == 0) {
-						if (properties["label"]?.value is String) properties["label"]?.value as String
+						if (properties["label"] is String) properties["label"] as String
 						else ""
 					}
 					else entries.getString(it - 1)
@@ -95,13 +95,17 @@ class FormFragment(val elementData: Array<ComponentData>) : Fragment() {
 			}
 			"button_array" -> {
 				newView = ButtonArray(context)
-				val labels = properties["entries"]?.value as JSONArray
-				newView.labels = List<String>(labels.length()) { labels.getString(it) }
+				val entries = properties["entries"] as JSONArray
+				newView.label = properties["label"] as String?
+				newView.entries = List<String>(entries.length()) { entries.getString(it) }
+				if (properties["multi_select"] is Boolean) {
+					newView.multiSelect = properties["multi_select"] as Boolean
+				}
 			}
 			"team" -> {
 				newView = TeamSelector(context)
-				if (properties["count"]?.value is Int) {
-					newView.count = properties["count"]?.value as Int
+				if (properties["count"] is Int) {
+					newView.count = properties["count"] as Int
 				}
 			}
 		}
@@ -117,7 +121,7 @@ class FormFragment(val elementData: Array<ComponentData>) : Fragment() {
 		newView.layoutParams = lp
 		newView.id = View.generateViewId()
 		if (properties["id"] != null) {
-			idLinks.add(IDPair(properties["id"]?.value as String, newView.id, (properties["terminate"]?.value ?: false) as Boolean))
+			idLinks.add(IDPair(properties["id"] as String, newView.id, (properties["terminate"] ?: false) as Boolean))
 		}
 		(view as LinearLayout).addView(newView)
 	}
@@ -135,6 +139,7 @@ class FormFragment(val elementData: Array<ComponentData>) : Fragment() {
 				}
 				is EditText -> {
 					val text = v.text.toString()
+					data.add(JSONProperty(it.name, v.text.toString()))
 					if (text.isBlank()) {
 						return null
 					}

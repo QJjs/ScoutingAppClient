@@ -3,6 +3,7 @@ package us.qjjs
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import us.qjjs.*
 import android.util.Log
 import android.util.TypedValue
@@ -47,11 +48,7 @@ class MainActivity : AppCompatActivity() {
 		tabs.setupWithViewPager(pager)
 
 		fab.setOnClickListener {
-//			compileData()
-			doAsync {
-				syncTemplates()
-				reloadPager()
-			}
+			compileData()
 		}
 	}
 
@@ -90,6 +87,7 @@ class MainActivity : AppCompatActivity() {
 					input.layoutParams = lp
 					input.hint = "http://example.com"
 					input.text.append(settings["url"].toString())
+					input.inputType = InputType.TYPE_TEXT_VARIATION_URI
 
 					layout.addView(input)
 					setView(layout)
@@ -197,7 +195,7 @@ class MainActivity : AppCompatActivity() {
 			val file = File(filesDir, "forms/${Calendar.getInstance().time.toString().replace(":", "-")}.json")
 			file.createNewFile()
 			val obj = JSONObject()
-			obj.put("template", title)
+			obj.put("template", settings["url"])
 			for(s in dataStream) {
 				obj.put(s.name, s.value)
 			}

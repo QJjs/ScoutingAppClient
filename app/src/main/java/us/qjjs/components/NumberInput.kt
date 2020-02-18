@@ -79,7 +79,7 @@ class NumberInput(context: Context?, attrs: AttributeSet? = null) : LinearLayout
 		if (current == null) {
 			editText.text.append(minimum.toString())
 		} else {
-			editText.text.append(min(current + 1, minimum).toString())
+			editText.text.append(min(current + 1, maximum).toString())
 		}
 	}
 
